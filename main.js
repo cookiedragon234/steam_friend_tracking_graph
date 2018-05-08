@@ -10,9 +10,9 @@ window.onload = function() {
     title: {
       /*text: "Number of friends playing a steam game"*/
     },
-    toolTip:{
-      content: "{y} playing at {x}"
-    },
+    /*toolTip:{
+      content: "{y} at {x}"
+    },*/
     axisX: {
       title: "Time",
       titleFontSize: 24,
@@ -33,12 +33,16 @@ window.onload = function() {
       {
         type: "stackedArea",
         xValueFormatString: "hh:mm TT" ,
-        dataPoints: play
+        dataPoints: play,
+        legendText: "People playing",
+        showInLegend: "true"
       },
       {
         type: "stackedArea",
         xValueFormatString: "hh:mm TT" ,
-        dataPoints: online
+        dataPoints: online,
+        legendText: "People online",
+        showInLegend: "true"
       }
     ]
   });
@@ -48,7 +52,8 @@ window.onload = function() {
     for (var i = 0; i < dps.length; i++) {
       play.push({
         x: new Date(dps[i][0] * 1000),
-        y: dps[i][1]
+        y: dps[i][1],
+        toolTipContent: "{y} playing at {x}"
       });
     }
     chart.render();
@@ -59,7 +64,8 @@ window.onload = function() {
     for (var i = 0; i < dps.length; i++) {
       online.push({
         x: new Date(dps[i][0] * 1000),
-        y: dps[i][1]
+        y: dps[i][1],
+        toolTipContent: "{y} online at {x}"
       });
     }
     chart.render();

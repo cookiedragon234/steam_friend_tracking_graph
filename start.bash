@@ -1,6 +1,9 @@
 sudo apt-get install screen -y
 sudo apt-get install python -y
 echo
+echo "Press enter when you have filled in the settings in get.py"
+read ans
+echo
 echo "How often should the python script run? (In seconds)"
 read time
 echo

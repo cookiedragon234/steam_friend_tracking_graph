@@ -15,7 +15,7 @@ ids = ""
 
 
 # Check that options have been filled in
-if url3 == "" or url2 == "":
+if key == "" or ids == "":
 	raise Exception('\nCONFIG NOT FILLED OUT!\n(Edit get.py)\n')
 
 # Make an api request to steam

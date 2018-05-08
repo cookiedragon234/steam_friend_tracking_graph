@@ -6,3 +6,6 @@ read time
 echo
 screen -S steamgraph -dm watch -n $time python get.py
 echo "Running script with a delay of $time seconds"
+echo
+echo "If you need to cancel the script running, just run this:"
+echo "screen -X -S steamgraph quit"

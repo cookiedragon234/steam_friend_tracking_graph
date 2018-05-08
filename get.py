@@ -7,34 +7,32 @@ import json, urllib2, sched, time, datetime, ast
 # Example: "5SECIWKUZCXTCZOJ0KVGI7ZRWWK1CG2K"
 url2 = ""
 
-#Comma seperated list of steamids (This website can help you find someone's steam id: https://steamid.xyz/)
+# Comma seperated list of steamids (This website can help you find someone's steam id: https://steamid.xyz/)
 # Example: "81989695382653747,71392687122829707,53252835950609017,20886436082312703,22923101302782822"
 url3 = ""
 
 #------------ SETTINGS END ------------#
 
 
+# Make an api request to steam
 url1 = "http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/"
-
 url = url1 + "?key=" + url2 + "&steamids=" + url3
-
 response = urllib2.urlopen(url)
+
+# Store and process the api request response
 data = response.read()
 data = data[12:]
 data = data[:-1]
-#print data
 dict = json.loads(data)
-#print dict['players']
 list = json.dumps(dict['players'])
 #list = ''.join(list)
 list = list[1:]
 list = list[:-1]
 list = list.split("}, {")
-#print "\n\nList"
-#print list
 final = ""
 
-
+# Start sorting through data, delete whats useless and keep what isn't
+peopleonline = 0
 peopleplaying = 0
 for x in list:
 	#print "\n"
@@ -45,27 +43,15 @@ for x in list:
 	if temp[:1] != "{":
 		temp = "{" + temp
 	temp = json.loads(temp)
+
+	# Don't actually need to delete, only count what's necessary so commented out
+	'''
 	if "steamid" in temp:
 		del temp["steamid"]
 	if "profileurl" in temp:
 		del temp["profileurl"]
 	if "realname" in temp:
 		del temp["realname"]
-	if "personastate" in temp:
-		if temp["personastate"] == 0:
-			temp["personastate"] = "Offline"
-		if temp["personastate"] == 1:
-			temp["personastate"] = "Online"
-		if temp["personastate"] == 2:
-			temp["personastate"] = "Online"
-		if temp["personastate"] == 3:
-			temp["personastate"] = "Online"
-		if temp["personastate"] == 4:
-			temp["personastate"] = "Online"
-		if temp["personastate"] == 5:
-			temp["personastate"] = "Online"
-		if temp["personastate"] == 6:
-			temp["personastate"] = "Looking To Play"
 	if "personastateflags" in temp:
 		del temp["personastateflags"]
 	if "communityvisibilitystate" in temp:
@@ -98,36 +84,81 @@ for x in list:
 		afg = temp['personastate']
 		del temp['personastate']
 		temp['state'] = afg
+	'''
+	# What we're looking for, num of people playing and people online
 	if "gameextrainfo" in temp:
 		afg = temp['gameextrainfo']
 		del temp['gameextrainfo']
 		temp['game'] = afg
 		peopleplaying = peopleplaying + 1
-	
-theactuallist = []
-okcount = peopleplaying
-theactuallist.append([int(time.time()), peopleplaying])
-print theactuallist
+	if "personastate" in temp:
+		#if temp["personastate"] == 0:
+			#temp["personastate"] = "Offline"
+		if temp["personastate"] == 1:
+			#temp["personastate"] = "Online"
+			peopleonline = peopleonline + 1
+		if temp["personastate"] == 2:
+			#temp["personastate"] = "Online"
+			peopleonline = peopleonline + 1
+		if temp["personastate"] == 3:
+			#temp["personastate"] = "Online"
+			peopleonline = peopleonline + 1
+		if temp["personastate"] == 4:
+			#temp["personastate"] = "Online"
+			peopleonline = peopleonline + 1
+		if temp["personastate"] == 5:
+			#temp["personastate"] = "Online"
+			peopleonline = peopleonline + 1
+		if temp["personastate"] == 6:
+			#temp["personastate"] = "Looking To Play"
+			peopleonline = peopleonline + 1
 
-okthislistpls = ''.join(str(e) for e in theactuallist)
-okthislistpls = okthislistpls + ",\n"
+
+
+# Join the people playing with the current unix time
+newplayinglist = []
+newplayinglist.append([int(time.time()), peopleplaying])
+
+finalplayinglist = ''.join(str(e) for e in newplayinglist)
+finalplayinglist = finalplayinglist + ",\n"
+
+
+# Join the people online with the current unix time
+newonlinelist = []
+newonlinelist.append([int(time.time()), peopleonline])
+
+finalonlinelist = ''.join(str(e) for e in newonlinelist)
+finalonlinelist = finalonlinelist + ",\n"
 
 
 
-#AMMENDABLE FILE
-thefile = open('readdata.json', 'a')
-thefile.write(okthislistpls)
-thefile.close()
+#  ---- AMMENDABLE FILE ----  #
 
-print okthislistpls
+# People Playing
+with open('playing_a.json', 'a') as thefile:
+    thefile.write(finalplayinglist)
+
+# People Online
+with open('online_a.json', 'a') as thefile:
+    thefile.write(finalonlinelist)
 
 
-#MAKE READABLE FILE
-with open('readdata.json', 'r') as myfile:
-    data=myfile.read().replace('\n', '')
+#  ---- READABLE FILE ----  #
+
+# People Playing
+with open('playing_a.json', 'r') as thefile:
+	data=thefile.read().replace('\n', '')
 data = data[:-1]
 data = '{"people_playing":[' + data + "]}"
 
-thefile = open('data.json', 'w')
-thefile.write(data)
-thefile.close()
+with open('playing_r.json', 'w') as thefile:
+	thefile.write(data)
+
+# People Online
+with open('online_a.json', 'r') as thefile:
+	data=thefile.read().replace('\n', '')
+data = data[:-1]
+data = '{"people_online":[' + data + "]}"
+
+with open('online_r.json', 'w') as thefile:
+	thefile.write(data)

@@ -1,5 +1,7 @@
 window.onload = function() {
   var dataPoints = [];
+  var play = [];
+  var online = [];
 
   var chart = new CanvasJS.Chart("chartContainer", {
     animationEnabled: true,
@@ -17,27 +19,34 @@ window.onload = function() {
       valueFormatString: "DDDD tt" ,
       prefix: "",
       interval: 0.5,
-      intervalType: "day"
-      gridColor: "#A0A0A0"
+      intervalType: "day",
+      gridColor: "#A0A0A0",
       interlacedColor: "#d3d3d3"
     },
     axisY: {
       title: "People playing",
       titleFontSize: 24,
-      prefix: ""
+      prefix: "",
       gridColor: "#A0A0A0"
     },
-    data: [{
-      type: "stackedArea",
-      xValueFormatString: "hh:mm TT" ,
-      dataPoints: dataPoints
-    }]
+    data: [
+      {
+        type: "stackedArea",
+        xValueFormatString: "hh:mm TT" ,
+        dataPoints: play
+      },
+      {
+        type: "stackedArea",
+        xValueFormatString: "hh:mm TT" ,
+        dataPoints: online
+      }
+    ]
   });
 
-  function addData(data) {
+  function addDataplay(data) {
     var dps = data.people_playing;
     for (var i = 0; i < dps.length; i++) {
-      dataPoints.push({
+      play.push({
         x: new Date(dps[i][0] * 1000),
         y: dps[i][1]
       });
@@ -45,7 +54,19 @@ window.onload = function() {
     chart.render();
   }
 
-  $.getJSON("playing_r.json", addData);
+  function addDataonline(data) {
+    var dps = data.people_online;
+    for (var i = 0; i < dps.length; i++) {
+      online.push({
+        x: new Date(dps[i][0] * 1000),
+        y: dps[i][1]
+      });
+    }
+    chart.render();
+  }
+
+  $.getJSON("playing_r.json", addDataplay);
+  $.getJSON("online_r.json", addDataonline);
 }
 
 function doreload(){

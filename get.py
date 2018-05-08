@@ -5,18 +5,22 @@ import json, urllib2, sched, time, datetime, ast
 
 # Your Steam API Key (Get one here: https://steamcommunity.com/dev/apikey)
 # Example: "5SECIWKUZCXTCZOJ0KVGI7ZRWWK1CG2K"
-url2 = ""
+key = ""
 
 # Comma seperated list of steamids (This website can help you find someone's steam id: https://steamid.xyz/)
 # Example: "81989695382653747,71392687122829707,53252835950609017,20886436082312703,22923101302782822"
-url3 = ""
+ids = ""
 
 #------------ SETTINGS END ------------#
 
 
+# Check that options have been filled in
+if url3 == "" or url2 == "":
+	raise Exception('\nCONFIG NOT FILLED OUT!\n(Edit get.py)\n')
+
 # Make an api request to steam
 url1 = "http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/"
-url = url1 + "?key=" + url2 + "&steamids=" + url3
+url = url1 + "?key=" + key + "&steamids=" + ids
 response = urllib2.urlopen(url)
 
 # Store and process the api request response

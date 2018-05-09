@@ -6,10 +6,14 @@ import json, urllib2, sched, time, datetime, ast
 # Your Steam API Key (Get one here: https://steamcommunity.com/dev/apikey)
 # Example: "5SECIWKUZCXTCZOJ0KVGI7ZRWWK1CG2K"
 key = ""
+with open('apikey.txt', 'r') as thefile:
+	key=str(thefile.read())
 
 # Comma seperated list of steamids (This website can help you find someone's steam id: https://steamid.xyz/)
 # Example: "81989695382653747,71392687122829707,53252835950609017,20886436082312703,22923101302782822"
 ids = ""
+with open('steamids.txt', 'r') as thefile:
+	ids=str(thefile.read())
 
 #------------ SETTINGS END ------------#
 
@@ -135,7 +139,6 @@ finalonlinelist = ''.join(str(e) for e in newonlinelist)
 finalonlinelist = finalonlinelist + ",\n"
 
 
-
 #  ---- AMMENDABLE FILE ----  #
 
 # People Playing
@@ -166,3 +169,42 @@ data = '{"people_online":[' + data + "]}"
 
 with open('online_r.json', 'w') as thefile:
 	thefile.write(data)
+
+# Cleanup data
+'''
+# Online
+with open('online_a.json', 'r') as thefile:
+	data=thefile.read().replace('\n', '')
+data = data[:-1]
+
+last = ""
+newdata = []
+for idx, x in enumerate(data):]
+    if x[1] != last:]
+        newdata.append(x)
+    last = x[1]
+data = newdata
+
+with open('online_r.json', 'w') as thefile:
+	thefile.write(data)
+data = '{"people_online":[' + data + "]}"
+
+with open('online_r.json', 'w') as thefile:
+	thefile.write(data)
+
+# Playing
+with open('playing_a.json', 'r') as thefile:
+	data=thefile.read().replace('\n', '')
+data = data[:-1]
+
+last = ""
+newdata = []
+for idx, x in enumerate(data):]
+    if x[1] != last:]
+        newdata.append(x)
+    last = x[1]
+data = newdata
+
+with open('playing_r.json', 'w') as thefile:
+	thefile.write(data)
+'''

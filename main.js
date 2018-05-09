@@ -31,14 +31,14 @@ window.onload = function() {
     },
     data: [
       {
-        type: "stackedArea",
+        type: "line",
         xValueFormatString: "hh:mm TT" ,
         dataPoints: play,
         legendText: "People playing",
         showInLegend: "true"
       },
       {
-        type: "stackedArea",
+        type: "line",
         xValueFormatString: "hh:mm TT" ,
         dataPoints: online,
         legendText: "People online",
@@ -56,7 +56,7 @@ window.onload = function() {
         toolTipContent: "{y} playing at {x}"
       });
     }
-    chart.render();
+    renderit(play);
   }
 
   function addDataonline(data) {
@@ -68,7 +68,22 @@ window.onload = function() {
         toolTipContent: "{y} online at {x}"
       });
     }
+    $("#loading").hide();
+    renderit(online);
     chart.render();
+  }
+
+  var ready = 0
+  function renderit(which){
+    if ready > 0{
+      chart.render();
+    } else{
+      if which == "play"{
+        ready = ready + 1;
+      } else if which == "online"{
+        ready = ready + 1;
+      }
+    }
   }
 
   $.getJSON("playing_r.json", addDataplay);

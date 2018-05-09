@@ -2,15 +2,13 @@ sudo apt-get install screen -y
 sudo apt-get install python -y
 echo
 if [ ! -f apikey.txt ]; then
-  echo "Please enter your steam API key:"
-  read $apikey
-  echo $apikey >> apikey.txt
+  echo "Please place your api key in apikey.txt"
+  echo "" >> apikey.txt
 fi
 echo
 if [ ! -f steamids.txt ]; then
-  echo "Please enter the comma seperated list of steamids to track:"
-  read $steamids
-  echo $steamids >> steamids.txt
+  echo "Please place the steamids to track in steamids.txt"
+  echo "" >> steamids.txt
 fi
 echo
 echo "How often should the python script run? (In seconds)"

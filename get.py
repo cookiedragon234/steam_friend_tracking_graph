@@ -181,17 +181,15 @@ data = data[:-1]
 last = ""
 newdata = []
 listlength = len(data)
-for idx, x in enumerate(data):
-    if idx == listlength -1:
+for idx in range(len(data)-1):
+	x = data[idx]
+    if data[idx][1] != data[idx-1][1] and data[idx][1] == data[idx+1][1]:
         newdata.append(x)
-    else:
-        if data[idx][1] != data[idx-1][1] and data[idx][1] == data[idx+1][1]:
-            newdata.append(x)
-        if data[idx][1] != data[idx+1][1] and data[idx][1] == data[idx-1][1]:
-            newdata.append(x)
-        if data[idx][1] != data[idx+1][1] and data[idx][1] != data[idx-1][1]:
-            newdata.append(x)
-        last = x[1]
+    if data[idx][1] != data[idx+1][1] and data[idx][1] == data[idx-1][1]:
+        newdata.append(x)
+    if data[idx][1] != data[idx+1][1] and data[idx][1] != data[idx-1][1]:
+        newdata.append(x)
+    last = x[1]
 data = newdata
 
 with open('online_a.json', 'w') as thefile:
@@ -209,17 +207,15 @@ data = data[:-1]
 last = ""
 newdata = []
 listlength = len(data)
-for idx, x in enumerate(data):
-    if idx == listlength -1:
+for idx in range(len(data)-1):
+	x = data[idx]
+    if data[idx][1] != data[idx-1][1] and data[idx][1] == data[idx+1][1]:
         newdata.append(x)
-    else:
-        if data[idx][1] != data[idx-1][1] and data[idx][1] == data[idx+1][1]:
-            newdata.append(x)
-        if data[idx][1] != data[idx+1][1] and data[idx][1] == data[idx-1][1]:
-            newdata.append(x)
-        if data[idx][1] != data[idx+1][1] and data[idx][1] != data[idx-1][1]:
-            newdata.append(x)
-        last = x[1]
+    if data[idx][1] != data[idx+1][1] and data[idx][1] == data[idx-1][1]:
+        newdata.append(x)
+    if data[idx][1] != data[idx+1][1] and data[idx][1] != data[idx-1][1]:
+        newdata.append(x)
+    last = x[1]
 data = newdata
 
 with open('playing_a.json', 'w') as thefile:

@@ -8,12 +8,14 @@ import json, urllib2, sched, time, datetime, ast
 key = ""
 with open('apikey.txt', 'r') as thefile:
 	key=str(thefile.read())
+key = key.replace('\n', ' ').replace('\r', '')
 
 # Comma seperated list of steamids (This website can help you find someone's steam id: https://steamid.xyz/)
 # Example: "81989695382653747,71392687122829707,53252835950609017,20886436082312703,22923101302782822"
 ids = ""
 with open('steamids.txt', 'r') as thefile:
 	ids=str(thefile.read())
+ids = ids.replace('\n', ' ').replace('\r', '')
 
 #------------ SETTINGS END ------------#
 

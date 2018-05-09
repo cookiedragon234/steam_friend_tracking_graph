@@ -68,15 +68,15 @@ window.onload = function() {
         toolTipContent: "{y} online at {x}"
       });
     }
-    $("#loading").hide();
     renderit(online);
-    chart.render();
+    /*chart.render();*/
   }
 
   var ready = 0
   function renderit(which){
     if ready > 0{
       chart.render();
+      $("#loading").hide();
     } else{
       if which == "play"{
         ready = ready + 1;

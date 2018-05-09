@@ -56,7 +56,8 @@ window.onload = function() {
         toolTipContent: "{y} playing at {x}"
       });
     }
-    renderit(play);
+    /*renderit(play);*/
+    chart.render();
   }
 
   function addDataonline(data) {
@@ -68,10 +69,11 @@ window.onload = function() {
         toolTipContent: "{y} online at {x}"
       });
     }
-    renderit(online);
-    /*chart.render();*/
+    /*renderit(online);*/
+    chart.render();
   }
 
+  /*
   var ready = 0
   function renderit(which){
     if(ready > 0){
@@ -84,7 +86,7 @@ window.onload = function() {
         ready = ready + 1;
       }
     }
-  }
+  }*/
 
   $.getJSON("playing_r.json", addDataplay);
   $.getJSON("online_r.json", addDataonline);

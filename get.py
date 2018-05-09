@@ -226,4 +226,3 @@ thefile.write(data)
 data = '{"people_online":[' + data + "]}"
 with open('playing_r.json', 'w') as thefile:
 	thefile.write(data)
-'''

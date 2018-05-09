@@ -19,7 +19,12 @@ read time
 echo
 echo "Would you like to name the screen session? (Default is 'steamgraph')"
 read scrn
-screen -S $scrn -dm watch -n $time python get.py
+if ! screen -list | grep -q "$scrn"; then
+  screen -S $scrn -dm watch -n $time python get.py
+else
+  echo "Screen with same name already running!"
+  exit 1
+fi
 echo
 echo "Running script with a delay of $time seconds"
 echo

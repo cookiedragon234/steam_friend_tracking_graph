@@ -171,7 +171,6 @@ with open('online_r.json', 'w') as thefile:
 	thefile.write(data)
 
 # Cleanup data
-'''
 # Online
 with open('online_a.json', 'r') as thefile:
 	data=thefile.read().replace('\n', '')
@@ -179,16 +178,24 @@ data = data[:-1]
 
 last = ""
 newdata = []
-for idx, x in enumerate(data):]
-    if x[1] != last:]
+listlength = len(data)
+for idx, x in enumerate(data):
+    if idx == listlength -1:
         newdata.append(x)
-    last = x[1]
+    else:
+        if data[idx][1] != data[idx-1][1] and data[idx][1] == data[idx+1][1]:
+            newdata.append(x)
+        if data[idx][1] != data[idx+1][1] and data[idx][1] == data[idx-1][1]:
+            newdata.append(x)
+        if data[idx][1] != data[idx+1][1] and data[idx][1] != data[idx-1][1]:
+            newdata.append(x)
+        last = x[1]
 data = newdata
 
-with open('online_r.json', 'w') as thefile:
+with open('online_a.json', 'w') as thefile:
 	thefile.write(data)
-data = '{"people_online":[' + data + "]}"
 
+data = '{"people_online":[' + data + "]}"
 with open('online_r.json', 'w') as thefile:
 	thefile.write(data)
 
@@ -199,12 +206,24 @@ data = data[:-1]
 
 last = ""
 newdata = []
-for idx, x in enumerate(data):]
-    if x[1] != last:]
+listlength = len(data)
+for idx, x in enumerate(data):
+    if idx == listlength -1:
         newdata.append(x)
-    last = x[1]
+    else:
+        if data[idx][1] != data[idx-1][1] and data[idx][1] == data[idx+1][1]:
+            newdata.append(x)
+        if data[idx][1] != data[idx+1][1] and data[idx][1] == data[idx-1][1]:
+            newdata.append(x)
+        if data[idx][1] != data[idx+1][1] and data[idx][1] != data[idx-1][1]:
+            newdata.append(x)
+        last = x[1]
 data = newdata
 
+with open('playing_a.json', 'w') as thefile:
+thefile.write(data)
+
+data = '{"people_online":[' + data + "]}"
 with open('playing_r.json', 'w') as thefile:
 	thefile.write(data)
 '''

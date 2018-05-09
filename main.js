@@ -74,13 +74,13 @@ window.onload = function() {
 
   var ready = 0
   function renderit(which){
-    if ready > 0{
+    if(ready > 0){
       chart.render();
       $("#loading").hide();
     } else{
-      if which == "play"{
+      if(which == "play"){
         ready = ready + 1;
-      } else if which == "online"{
+      } else if(which == "online"){
         ready = ready + 1;
       }
     }

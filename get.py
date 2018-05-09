@@ -221,7 +221,7 @@ for idx, x in enumerate(data):
 data = newdata
 
 with open('playing_a.json', 'w') as thefile:
-thefile.write(data)
+	thefile.write(data)
 
 data = '{"people_online":[' + data + "]}"
 with open('playing_r.json', 'w') as thefile:

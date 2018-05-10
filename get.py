@@ -1,5 +1,6 @@
 import json, urllib2, sched, time, datetime, ast
 
+print "Running script at " + time.ctime()
 
 #------------ SETTINGS - PLEASE FILL IN ------------#
 
@@ -173,24 +174,33 @@ with open('online_r.json', 'w') as thefile:
 	thefile.write(data)
 
 # Cleanup data
+
+def cleanup(data):
+	newdata = []
+	for idx in range(len(data)):
+	    x = data[idx]
+	    if idx != 0 and idx != len(data)-1:
+	        if data[idx][1] != data[idx-1][1] or data[idx][1] != data[idx+1][1]:
+	            newdata.append(x)
+	    else:
+	        newdata.append(x)
+	newdata.append(data[-1])
+	return newdata
+
 # Online
 with open('online_a.json', 'r') as thefile:
 	data=thefile.read().replace('\n', '')
-data = data[:-1]
 
-last = ""
-newdata = []
-listlength = len(data)
-for idx in range(len(data)-1):
-	x = data[idx]
-    if data[idx][1] != data[idx-1][1] and data[idx][1] == data[idx+1][1]:
-        newdata.append(x)
-    if data[idx][1] != data[idx+1][1] and data[idx][1] == data[idx-1][1]:
-        newdata.append(x)
-    if data[idx][1] != data[idx+1][1] and data[idx][1] != data[idx-1][1]:
-        newdata.append(x)
-    last = x[1]
-data = newdata
+# Convert ammendable file to multidimensional array
+data = data[:-1]
+data = "[" + data + "]"
+
+cleanup(data)
+
+# Convert multidimensional array to ammendable file
+data = "".join(str(e) for e in data)
+data = data.replace("][", "], [")
+data = data + ","
 
 with open('online_a.json', 'w') as thefile:
 	thefile.write(data)
@@ -202,21 +212,17 @@ with open('online_r.json', 'w') as thefile:
 # Playing
 with open('playing_a.json', 'r') as thefile:
 	data=thefile.read().replace('\n', '')
-data = data[:-1]
 
-last = ""
-newdata = []
-listlength = len(data)
-for idx in range(len(data)-1):
-	x = data[idx]
-    if data[idx][1] != data[idx-1][1] and data[idx][1] == data[idx+1][1]:
-        newdata.append(x)
-    if data[idx][1] != data[idx+1][1] and data[idx][1] == data[idx-1][1]:
-        newdata.append(x)
-    if data[idx][1] != data[idx+1][1] and data[idx][1] != data[idx-1][1]:
-        newdata.append(x)
-    last = x[1]
-data = newdata
+# Convert ammendable file to multidimensional array
+data = data[:-1]
+data = "[" + data + "]"
+
+data = cleanup(data)
+
+# Convert multidimensional array to ammendable file
+data = "".join(str(e) for e in data)
+data = data.replace("][", "], [")
+data = data + ","
 
 with open('playing_a.json', 'w') as thefile:
 	thefile.write(data)

@@ -3,6 +3,7 @@
 	<script src="jquery-1.11.1.min.js"></script>
 	<script src="jquery.canvasjs.min.js"></script>
 	<script src="main.js"></script>
+	<title>Steam Chart</title>
 </head>
 <body>
 	<h1>Chart:</h1>

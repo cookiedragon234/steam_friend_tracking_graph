@@ -20,7 +20,7 @@ ids = ids.replace('\n', ' ').replace('\r', '')
 
 #------------ SETTINGS END ------------#
 
-
+# ----------- API REQUEST ----------- #
 # Check that options have been filled in
 if key == "" or ids == "":
 	raise Exception('\nCONFIG NOT FILLED OUT!\n(Edit get.py)\n')
@@ -42,6 +42,7 @@ list = list[:-1]
 list = list.split("}, {")
 final = ""
 
+# ----------- Sort through data ----------- #
 # Start sorting through data, delete whats useless and keep what isn't
 peopleonline = 0
 peopleplaying = 0
@@ -141,7 +142,7 @@ newonlinelist.append([int(time.time()), peopleonline])
 finalonlinelist = ''.join(str(e) for e in newonlinelist)
 finalonlinelist = finalonlinelist + ",\n"
 
-
+# ----------- WRITE TO FILES ----------- #
 #  ---- AMMENDABLE FILE ----  #
 
 # People Playing
@@ -173,7 +174,7 @@ data = '{"people_online":[' + data + "]}"
 with open('online_r.json', 'w') as thefile:
 	thefile.write(data)
 
-# Cleanup data
+# ----------- CLEANUP DATA ----------- #
 
 def cleanup(data):
 	newdata = []
